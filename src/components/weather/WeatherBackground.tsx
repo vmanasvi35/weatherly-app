@@ -2,10 +2,12 @@ import { useMemo } from 'react';
 
 interface Props {
   category: 'sunny' | 'cloudy' | 'rainy' | 'snowy' | 'stormy' | null;
-}
+  bgClass?: string;
+}   
 
-const WeatherBackground = ({ category }: Props) => {
-  const bgClass = useMemo(() => {
+const WeatherBackground = ({ category, bgClass }: Props) => {
+  console.log('WeatherBackground category:', category); // Debug log
+  const gradientBg = useMemo(() => {
     switch (category) {
       case 'sunny': return 'from-sky-300 via-amber-200 to-orange-200 dark:from-indigo-900 dark:via-purple-900 dark:to-slate-900';
       case 'cloudy': return 'from-slate-300 via-gray-300 to-blue-200 dark:from-slate-900 dark:via-gray-800 dark:to-slate-900';
@@ -16,17 +18,22 @@ const WeatherBackground = ({ category }: Props) => {
     }
   }, [category]);
 
+  const finalBg = bgClass || `bg-gradient-to-br ${gradientBg}`;
+
   return (
-    <div className={`fixed inset-0 bg-gradient-to-br ${bgClass} transition-all duration-1000 -z-10`}>
+    <div className={`fixed inset-0 ${finalBg} transition-all duration-1000 -z-10`}>
       {category === 'sunny' && (
-        <div className="absolute top-16 right-16 w-48 h-48 rounded-full bg-amber-300/30 dark:bg-amber-500/10 sun-pulse blur-3xl" />
+        <>
+          <div className="absolute top-10 right-10 w-64 h-64 rounded-full bg-yellow-300/40 sun-pulse blur-2xl" />
+          <div className="absolute top-20 right-20 w-32 h-32 rounded-full bg-yellow-400/60 blur-xl" />
+        </>
       )}
       {category === 'rainy' && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {Array.from({ length: 40 }).map((_, i) => (
+          {Array.from({ length: 80 }).map((_, i) => (
             <div
               key={i}
-              className="absolute w-0.5 h-6 bg-blue-400/30 dark:bg-blue-300/20 rounded-full rain-drop"
+              className="absolute w-1 h-10 bg-blue-500/70 rounded-full rain-drop"
               style={{
                 left: `${Math.random() * 100}%`,
                 animationDuration: `${0.8 + Math.random() * 0.6}s`,
@@ -41,7 +48,7 @@ const WeatherBackground = ({ category }: Props) => {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="absolute bg-white/20 dark:bg-white/5 rounded-full cloud-drift blur-xl"
+              className="absolute bg-white/40 dark:bg-white/5 rounded-full cloud-drift blur-xl"
               style={{
                 width: `${150 + i * 80}px`,
                 height: `${60 + i * 20}px`,
@@ -55,17 +62,24 @@ const WeatherBackground = ({ category }: Props) => {
       )}
       {category === 'snowy' && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {Array.from({ length: 30 }).map((_, i) => (
+          {Array.from({ length: 50 }).map((_, i) => (
             <div
               key={i}
-              className="absolute w-2 h-2 bg-white/60 rounded-full snow-fall"
+              className="absolute w-3 h-3 bg-white/90 shadow-lg rounded-full snow-fall"
               style={{
                 left: `${Math.random() * 100}%`,
+                width: `${200 + i * 100}px`,
+                height: `${80 + i * 30}px`,
                 animationDuration: `${3 + Math.random() * 4}s`,
                 animationDelay: `${Math.random() * 5}s`,
               }}
             />
           ))}
+        </div>
+      )}
+      {category === 'stormy' && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/2 w-1 h-full bg-white/20 animate-pulse" />
         </div>
       )}
     </div>

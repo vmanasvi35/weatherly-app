@@ -24,6 +24,20 @@ const Index = () => {
     ? getWeatherCategory(weatherData.current.condition.code)
     : null;
 
+  // Determine background class based on weather condition
+  const condition = weatherData?.current?.condition?.text?.toLowerCase();
+  let bgClass = "";
+
+  if (condition?.includes("rain")) {
+    bgClass = "bg-rain";
+  } else if (condition?.includes("cloud")) {
+    bgClass = "bg-cloud";
+  } else if (condition?.includes("sun") || condition?.includes("clear")) {
+    bgClass = "bg-sunny";
+  } else {
+    bgClass = "bg-default";
+  }
+
   const loadWeather = useCallback(async (query: string) => {
     setIsLoading(true);
     setError(null);
@@ -74,7 +88,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative">
-      <WeatherBackground category={weatherCategory} />
+      <WeatherBackground category={weatherCategory} bgClass={bgClass} />
       <div className="relative z-10 max-w-4xl mx-auto pb-12">
         <Header isDark={isDark} onToggle={toggle} />
 

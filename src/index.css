@@ -4,6 +4,23 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
+.bg-sunny {
+  background: linear-gradient(to top, #fceabb, #f8b500);
+  animation: pulse 5s infinite;
+}
+
+.bg-cloud {
+  background: linear-gradient(to top, #d7d2cc, #304352);
+}
+
+.bg-rain {
+  background: linear-gradient(to top, #4e54c8, #8f94fb);
+}
+
+.bg-default {
+  background: linear-gradient(to top, #667eea, #764ba2);
+}
+
 @layer base {
   :root {
     --background: 210 33% 96%;
