@@ -33,7 +33,7 @@ const WeatherBackground = ({ category, bgClass }: Props) => {
           {Array.from({ length: 80 }).map((_, i) => (
             <div
               key={i}
-              className="absolute w-1 h-10 bg-blue-500/70 rounded-full rain-drop"
+              className="absolute w-1 h-40 bg-blue-500/70 rounded-full raindrop"
               style={{
                 left: `${Math.random() * 100}%`,
                 animationDuration: `${0.8 + Math.random() * 0.6}s`,
