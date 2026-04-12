@@ -24,18 +24,21 @@ const Index = () => {
     ? getWeatherCategory(weatherData.current.condition.code)
     : null;
 
-  // Determine background class based on weather condition
-  const condition = weatherData?.current?.condition?.text?.toLowerCase();
+  // Determine background based on weather condition and temperature
+  const temp = weatherData?.current?.temp_c;
+  const weather = weatherData?.current?.condition?.text || "";
   let bgClass = "";
 
-  if (condition?.includes("rain")) {
-    bgClass = "bg-rain";
-  } else if (condition?.includes("cloud")) {
-    bgClass = "bg-cloud";
-  } else if (condition?.includes("sun") || condition?.includes("clear")) {
-    bgClass = "bg-sunny";
+  if (temp !== undefined && temp <= 0) {
+    bgClass = "snow";
+  } else if (weather.includes("Rain")) {
+    bgClass = "rain";
+  } else if (weather.includes("Cloud")) {
+    bgClass = "cloud";
+  } else if (weather === "Clear") {
+    bgClass = "sunny";
   } else {
-    bgClass = "bg-default";
+    bgClass = "default";
   }
 
   const loadWeather = useCallback(async (query: string) => {

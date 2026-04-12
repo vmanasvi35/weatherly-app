@@ -4,21 +4,38 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
-.bg-sunny {
-  background: linear-gradient(to top, #fceabb, #f8b500);
+.sunny {
+  background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 50%, #e8a307 100%),
+              linear-gradient(rgba(255, 226, 140, 0.1), rgba(255, 226, 140, 0.1));
   animation: pulse 5s infinite;
+  transition: background 1s ease;
 }
 
-.bg-cloud {
-  background: linear-gradient(to top, #d7d2cc, #304352);
+.cloud {
+  background: linear-gradient(135deg, #d7d2cc 0%, #b8b3a8 50%, #94989a 100%),
+              linear-gradient(rgba(100, 100, 100, 0.08), rgba(100, 100, 100, 0.08));
+  transition: background 1s ease;
 }
 
-.bg-rain {
-  background: linear-gradient(to top, #4e54c8, #8f94fb);
+.rain {
+  background: linear-gradient(135deg, #667eea 0%, #5a67d8 50%, #4a5dc9 100%),
+              linear-gradient(rgba(70, 70, 150, 0.12), rgba(70, 70, 150, 0.12));
+  animation: gentle-shift 8s ease-in-out infinite;
+  transition: background 1s ease;
 }
 
-.bg-default {
-  background: linear-gradient(to top, #667eea, #764ba2);
+.snow {
+  background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%, #e6eeff 100%),
+              linear-gradient(rgba(230, 238, 255, 0.05), rgba(230, 238, 255, 0.05));
+  animation: gentle-shift 6s ease-in-out infinite;
+  transition: background 1s ease;
+}
+
+.default {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6b3fa0 100%),
+              linear-gradient(rgba(102, 126, 234, 0.1), rgba(102, 126, 234, 0.1));
+  animation: gentle-shift 7s ease-in-out infinite;
+  transition: background 1s ease;
 }
 
 @layer base {
@@ -155,6 +172,11 @@
   }
 }
 
+@keyframes gentle-shift {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.05); }
+}
+
 @keyframes cloud-drift {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100vw); }
@@ -162,7 +184,7 @@
 
 @keyframes sun-pulse {
   0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
 }
 
 @keyframes snow-fall {
