@@ -19,6 +19,7 @@ export interface CurrentWeather {
   feelslike_c: number;
   humidity: number;
   wind_kph: number;
+  is_day: number;
   condition: WeatherCondition;
   uv: number;
   vis_km: number;

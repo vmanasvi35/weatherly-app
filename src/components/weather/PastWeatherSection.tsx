@@ -9,11 +9,11 @@ interface Props {
 const PastWeatherSection = ({ day, isLoading }: Props) => {
   if (isLoading) {
     return (
-      <div className="max-w-xl mx-auto w-full px-4">
-        <h3 className="text-lg font-semibold text-foreground mb-3">Yesterday</h3>
-        <div className="glass-card p-6 animate-pulse">
-          <div className="h-4 bg-muted rounded w-1/3 mb-3" />
-          <div className="h-8 bg-muted rounded w-1/4" />
+      <div className="mx-auto w-full max-w-3xl">
+        <h3 className="section-title mb-3">Yesterday</h3>
+        <div className="weather-panel animate-pulse p-6">
+          <div className="mb-3 h-4 w-1/3 rounded bg-white/20" />
+          <div className="h-8 w-1/4 rounded bg-white/20" />
         </div>
       </div>
     );
@@ -29,22 +29,22 @@ const PastWeatherSection = ({ day, isLoading }: Props) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.45 }}
-      className="max-w-xl mx-auto w-full px-4"
+      className="mx-auto w-full max-w-3xl"
     >
-      <h3 className="text-lg font-semibold text-foreground mb-3">Yesterday</h3>
-      <div className="glass-card p-6 flex items-center gap-5">
+      <h3 className="section-title mb-3">Yesterday</h3>
+      <div className="weather-panel flex items-center gap-5 p-6">
         <img
           src={`https:${day.day.condition.icon}`}
           alt={day.day.condition.text}
           className="w-16 h-16"
         />
         <div className="flex-1">
-          <p className="text-sm text-muted-foreground">{dateStr}</p>
-          <p className="text-sm text-muted-foreground">{day.day.condition.text}</p>
+          <p className="text-sm text-white/65">{dateStr}</p>
+          <p className="text-sm text-white/75">{day.day.condition.text}</p>
           <div className="flex gap-4 mt-2 text-sm">
-            <span className="text-foreground font-bold">{Math.round(day.day.maxtemp_c)}° / {Math.round(day.day.mintemp_c)}°</span>
-            <span className="text-muted-foreground">💧 {day.day.avghumidity}%</span>
-            <span className="text-muted-foreground">💨 {Math.round(day.day.maxwind_kph)} km/h</span>
+            <span className="font-bold text-white">{Math.round(day.day.maxtemp_c)}° / {Math.round(day.day.mintemp_c)}°</span>
+            <span className="text-white/65">Humidity {day.day.avghumidity}%</span>
+            <span className="text-white/65">Wind {Math.round(day.day.maxwind_kph)} km/h</span>
           </div>
         </div>
       </div>

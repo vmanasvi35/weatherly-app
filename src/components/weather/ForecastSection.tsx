@@ -15,9 +15,9 @@ const ForecastSection = ({ days }: Props) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.35 }}
-      className="max-w-xl mx-auto w-full px-4"
+      className="mx-auto w-full max-w-3xl"
     >
-      <h3 className="text-lg font-semibold text-foreground mb-3">3-Day Forecast</h3>
+      <h3 className="section-title mb-3">3-Day Forecast</h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {futureDays.map((day) => {
           const date = new Date(day.date);
@@ -25,20 +25,20 @@ const ForecastSection = ({ days }: Props) => {
           const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
           return (
-            <div key={day.date} className="glass-card p-5 text-center">
-              <p className="text-sm font-semibold text-foreground">{dayName}</p>
-              <p className="text-xs text-muted-foreground">{dateStr}</p>
+            <div key={day.date} className="weather-panel p-5 text-center">
+              <p className="text-sm font-semibold text-white">{dayName}</p>
+              <p className="text-xs text-white/60">{dateStr}</p>
               <img
                 src={`https:${day.day.condition.icon}`}
                 alt={day.day.condition.text}
                 className="w-14 h-14 mx-auto my-2"
               />
-              <p className="text-xs text-muted-foreground mb-2">{day.day.condition.text}</p>
+              <p className="mb-2 text-xs text-white/70">{day.day.condition.text}</p>
               <div className="flex justify-center gap-2 text-sm">
-                <span className="font-bold text-foreground">{Math.round(day.day.maxtemp_c)}°</span>
-                <span className="text-muted-foreground">{Math.round(day.day.mintemp_c)}°</span>
+                <span className="font-bold text-white">{Math.round(day.day.maxtemp_c)}°</span>
+                <span className="text-white/65">{Math.round(day.day.mintemp_c)}°</span>
               </div>
-              <p className="text-xs text-primary mt-2">💧 {day.day.daily_chance_of_rain}%</p>
+              <p className="mt-2 text-xs text-white/80">Rain {day.day.daily_chance_of_rain}%</p>
             </div>
           );
         })}

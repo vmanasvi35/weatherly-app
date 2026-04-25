@@ -7,11 +7,11 @@ interface Props {
 }
 
 const StatItem = ({ icon: Icon, label, value }: { icon: typeof Droplets; label: string; value: string }) => (
-  <div className="flex items-center gap-3 p-3">
-    <Icon className="w-5 h-5 text-primary shrink-0" />
+  <div className="weather-stat">
+    <Icon className="h-5 w-5 shrink-0 text-white/90" />
     <div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="text-sm font-semibold text-foreground">{value}</p>
+      <p className="text-[11px] uppercase tracking-[0.18em] text-white/60">{label}</p>
+      <p className="text-sm font-semibold text-white">{value}</p>
     </div>
   </div>
 );
@@ -25,27 +25,27 @@ const CurrentWeatherCard = ({ data }: Props) => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.2 }}
-      className="glass-card-elevated p-8 max-w-xl mx-auto w-full"
+      className="weather-panel mx-auto w-full max-w-3xl p-6 sm:p-8"
     >
-      <div className="text-center mb-6">
-        <h2 className="text-xl font-semibold text-foreground">{location.name}</h2>
-        <p className="text-sm text-muted-foreground">{location.region}, {location.country}</p>
-        <p className="text-xs text-muted-foreground mt-1">{location.localtime}</p>
+      <div className="mb-6 text-center">
+        <h2 className="city">{location.name}</h2>
+        <p className="text-sm text-white/70">{location.region}, {location.country}</p>
+        <p className="mt-1 text-xs uppercase tracking-[0.2em] text-white/55">{location.localtime}</p>
       </div>
 
-      <div className="flex items-center justify-center gap-4 mb-6">
+      <div className="mb-8 flex flex-col items-center justify-center gap-4 text-center sm:flex-row sm:text-left">
         <img
           src={`https:${current.condition.icon}`}
           alt={current.condition.text}
-          className="w-20 h-20"
+          className="h-24 w-24 drop-shadow-[0_10px_22px_rgba(255,255,255,0.2)]"
         />
         <div>
-          <p className="text-6xl font-bold text-foreground">{Math.round(current.temp_c)}°</p>
-          <p className="text-sm text-muted-foreground">{current.condition.text}</p>
+          <p className="temp">{Math.round(current.temp_c)}°</p>
+          <p className="text-base font-medium text-white/80">{current.condition.text}</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 rounded-xl bg-secondary/50 p-2">
+      <div className="grid grid-cols-1 gap-3 rounded-[24px] bg-white/10 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] sm:grid-cols-2 lg:grid-cols-3">
         <StatItem icon={Thermometer} label="Feels Like" value={`${Math.round(current.feelslike_c)}°C`} />
         <StatItem icon={Droplets} label="Humidity" value={`${current.humidity}%`} />
         <StatItem icon={Wind} label="Wind" value={`${current.wind_kph} km/h`} />

@@ -1,41 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-
 .sunny {
-  background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 50%, #e8a307 100%),
-              linear-gradient(rgba(255, 226, 140, 0.1), rgba(255, 226, 140, 0.1));
-  animation: pulse 5s infinite;
-  transition: background 1s ease;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 28%),
+    linear-gradient(180deg, #7c96c9 0%, #9a86c8 46%, #c689b8 100%);
 }
 
-.cloud {
-  background: linear-gradient(135deg, #d7d2cc 0%, #b8b3a8 50%, #94989a 100%),
-              linear-gradient(rgba(100, 100, 100, 0.08), rgba(100, 100, 100, 0.08));
-  transition: background 1s ease;
+.cloudy {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 30%),
+    linear-gradient(180deg, #7286a6 0%, #8f97b2 48%, #b9b6c8 100%);
 }
 
-.rain {
-  background: linear-gradient(135deg, #667eea 0%, #5a67d8 50%, #4a5dc9 100%),
-              linear-gradient(rgba(70, 70, 150, 0.12), rgba(70, 70, 150, 0.12));
-  animation: gentle-shift 8s ease-in-out infinite;
-  transition: background 1s ease;
+.rainy {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 28%),
+    linear-gradient(180deg, #29446f 0%, #243b63 45%, #17243d 100%);
 }
 
-.snow {
-  background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%, #e6eeff 100%),
-              linear-gradient(rgba(230, 238, 255, 0.05), rgba(230, 238, 255, 0.05));
-  animation: gentle-shift 6s ease-in-out infinite;
-  transition: background 1s ease;
+.cold {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.16), transparent 30%),
+    linear-gradient(180deg, #6f94ad 0%, #78aac2 48%, #5c8ea7 100%);
 }
 
-.default {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6b3fa0 100%),
-              linear-gradient(rgba(102, 126, 234, 0.1), rgba(102, 126, 234, 0.1));
-  animation: gentle-shift 7s ease-in-out infinite;
-  transition: background 1s ease;
+.night {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.14), transparent 28%),
+    linear-gradient(to top, #141e30, #243b55);
+}
+
+.stormy {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 28%),
+    linear-gradient(to top, #434343, #000000);
+}
+
+.weather-scene {
+  transition: background 0.6s ease;
+}
+
+.weather-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 16, 34, 0.18), rgba(7, 16, 34, 0.08) 34%, rgba(7, 16, 34, 0.16)),
+    radial-gradient(circle at center, transparent 0%, rgba(7, 16, 34, 0.08) 100%);
+  pointer-events: none;
 }
 
 @layer base {
@@ -138,10 +154,47 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background 0.6s ease;
+  }
+
+  button {
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      color 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
+
+  button:active {
+    transform: scale(0.98);
   }
 }
 
 @layer components {
+  .weather-card {
+    background: rgba(18, 28, 45, 0.24);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+  }
+
+  .weather-shell {
+    @apply border border-white/15;
+    min-height: calc(100vh - 3rem);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+      rgba(10, 18, 34, 0.32);
+  }
+
   .glass-card {
     @apply rounded-2xl border backdrop-blur-xl;
     background: hsl(var(--glass));
@@ -154,6 +207,48 @@
     background: hsl(var(--glass));
     border-color: hsl(var(--glass-border));
     box-shadow: var(--shadow-elevated);
+  }
+
+  .weather-panel {
+    @apply rounded-[24px] border border-white/15 backdrop-blur-xl;
+    background: rgba(14, 24, 41, 0.24);
+    box-shadow: 0 12px 40px rgba(5, 12, 24, 0.2);
+  }
+
+  .weather-input {
+    @apply border border-white/20 backdrop-blur-xl;
+    background: rgba(12, 22, 39, 0.28);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .weather-stat {
+    @apply flex items-center gap-3 rounded-2xl border border-white/10 p-3;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .section-title {
+    @apply text-sm font-semibold uppercase tracking-[0.22em] text-white/70;
+  }
+
+  .temp {
+    font-size: clamp(4rem, 8vw, 5.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    color: white;
+    text-shadow: 0 16px 34px rgba(7, 16, 34, 0.38);
+  }
+
+  .city {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: white;
+    opacity: 0.96;
+    text-shadow: 0 8px 20px rgba(7, 16, 34, 0.28);
+  }
+
+  .sun-glow {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.55) 0%, rgba(255, 221, 168, 0.32) 38%, transparent 72%);
   }
 }
 
@@ -194,11 +289,11 @@
 
 .raindrop {
   position: absolute;
-  width: 2px;
-  height: 15px;
-  background: rgba(0, 150, 255, 0.6);
-  top: -20px;              /* start above screen */
-  opacity: 0;              /* hide initially */
+  width: 1px;
+  height: 12px;
+  background: rgba(208, 232, 255, 0.6);
+  top: -20px;
+  opacity: 0.6;
   animation: rain-fall linear infinite;
 }
 
@@ -212,4 +307,66 @@
 
 .snow-fall {
   animation: snow-fall linear infinite;
+}
+
+#chatButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px;
+  z-index: 1000;
+  background: #4CAF50;
+  color: white;
+  font-size: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#chatContainer {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 1000;
+  width: 320px;
+  height: 420px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+#chatHeader {
+  background: #4CAF50;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#chatbox {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 14px;
+  color: black;
+}
+
+#userInput {
+  border: none;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  outline: none;
+  width: 75%;
+  color: black;
+}
+
+#chatContainer > button {
+  width: 25%;
+  border: none;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
 }

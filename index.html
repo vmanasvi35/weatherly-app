@@ -24,5 +24,87 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <div id="chatButton" onclick="toggleChat()">💬</div>
+
+    <div id="chatContainer">
+      <div id="chatHeader" onclick="toggleChat()">Chatbot ✖</div>
+      <div id="chatbox"></div>
+      <input id="userInput" placeholder="Type message..." />
+      <button type="button" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+      function toggleChat() {
+        const chat = document.getElementById("chatContainer");
+        const isHidden = chat.style.display === "" || chat.style.display === "none";
+        chat.style.display = isHidden ? "flex" : "none";
+      }
+
+      async function sendMessage() {
+        const input = document.getElementById("userInput");
+        const message = input.value.trim();
+        if (!message) return;
+        const weatherContext = window.currentWeatherContext ?? null;
+
+        const chatbox = document.getElementById("chatbox");
+        chatbox.innerHTML += `
+          <div style="text-align:right; margin:5px;">
+            <span style="background:#4CAF50; color:white; padding:8px 12px; border-radius:10px;">
+              ${message}
+            </span>
+          </div>
+        `;
+        chatbox.scrollTop = chatbox.scrollHeight;
+
+        try {
+          const response = await fetch("https://chatbot-0gdw.onrender.com", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: message,
+              weather: weatherContext
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log("Bot response:", data); // Log to see what backend returns
+          
+          const botReply = data.reply || data.message || data.response || data.text || JSON.stringify(data);
+          chatbox.innerHTML += `
+            <div style="text-align:left; margin:5px;">
+              <span style="background:#e0e0e0; color:black; padding:8px 12px; border-radius:10px;">
+                ${botReply}
+              </span>
+            </div>
+          `;
+          chatbox.scrollTop = chatbox.scrollHeight;
+        } catch (error) {
+          console.error("Chat error:", error);
+          chatbox.innerHTML += `
+            <div style="text-align:left; margin:5px;">
+              <span style="background:#ffcccc; color:darkred; padding:8px 12px; border-radius:10px;">
+                Error: ${error.message}
+              </span>
+            </div>
+          `;
+          chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        input.value = "";
+      }
+
+      document.getElementById("userInput").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          sendMessage();
+        }
+      });
+    </script>
   </body>
 </html>
